@@ -22,6 +22,8 @@ date = datetime.date.today().strftime("%Y%m%d")
 name = file_name.replace('.rb', '')
 log_name = '%s_%s.txt' % (name,date)
 csv_name = '%s_%s.csv' % (name,date)
+log_path = dir_name + "/" + log_name
+csv_path = dir_name + "/" + csv_name
 
 
 def cmd_run(cmd):
@@ -36,21 +38,18 @@ def run_loop_time(loop_num,*args):
     for arg in args:
         cmd += (" %s" % str(arg))
 
-    os.chdir(dir_name)
-    f = open(csv_name, 'a')
+    f = open(csv_path, 'a')
     writer = csv.writer(f, lineterminator='\n')
     writer.writerow([date,param])
     f.close()
-    os.chdir("../")
 
     num = 0
     count = 0
     while num < loop_num:
         ret = cmd_run(cmd)
-        os.chdir(dir_name)
         if (ret.returncode == 0):
             # write txt
-            f = open(log_name,'a')
+            f = open(log_path,'a')
             f.write("%s %s\n" % (date,str(args)))
             f.write("%s\n" % ret.stdout.decode('utf-8'))
             f.write("%s\n" % ret.stderr.decode('utf-8'))
@@ -64,7 +63,7 @@ def run_loop_time(loop_num,*args):
                 time_ms = re.findall('[0-9.]+',a.group(1))
                 #tims_second = float(time_ms[0]) * 60.0 + float(time_ms[1])
 
-                f = open(csv_name, 'a')
+                f = open(csv_path, 'a')
                 writer = csv.writer(f, lineterminator='\n')
                 writer.writerow([num,time_ms[0]])
                 f.close()
@@ -72,24 +71,20 @@ def run_loop_time(loop_num,*args):
             num += 1
         else:
             # write txt
-            f = open(log_name,'a')
+            f = open(log_path,'a')
             f.write("%s %s\n" % (date,str(args)))
             f.write("%s\n" % ret.stdout.decode('utf-8'))
             f.write("%s\n" % ret.stderr.decode('utf-8'))
             f.close()
 
-        os.chdir("../")
         count += 1
         if (loop_num*2<count):
             break
 
-    os.chdir(dir_name)
-    f = open(csv_name, 'a')
+    f = open(csv_path, 'a')
     writer = csv.writer(f, lineterminator='\n')
     writer.writerow("")
     f.close()
-    os.chdir("../")
 
 for i in range(1,11):
     run_loop_time(run_num,i*100,i*100)
-
