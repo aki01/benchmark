@@ -19,7 +19,7 @@ file_name = args[1]
 run_num = int(args[2])
 
 date = datetime.date.today().strftime("%Y%m%d")
-name = file_name.replace('.rb', '')
+name = re.sub('\w+/', "", file_name).replace('.rb', '')
 log_name = '%s_%s.txt' % (name,date)
 csv_name = '%s_%s.csv' % (name,date)
 log_path = dir_name + "/" + log_name
