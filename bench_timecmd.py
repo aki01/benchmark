@@ -91,7 +91,7 @@ class Bench:
                             time_ms = float(time_get[0]) * 60.0 + float(time_get[1])
                         else :
                             time_get = re.findall('[0-9.]+',real_time.group(1))
-                            time_ms = time_get[0]
+                            time_ms = float(time_get[0])
 
                         f = open(self.csv_path, 'a')
                         writer = csv.writer(f, lineterminator='\n')
