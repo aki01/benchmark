@@ -46,6 +46,7 @@ class Bench:
         return p
 
     def run_loop_time(self,*args):
+        self.avg = []
         param = args
         date = datetime.datetime.today().strftime("%Y%m%d %H:%M:%S")
         if (self.select == 0):
