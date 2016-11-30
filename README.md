@@ -1,2 +1,2 @@
 # benchmark
-tested on ubuntu14
+tested on ubuntu,OSX
