@@ -121,7 +121,7 @@ class Bench:
                 f.close()
 
             count += 1
-            if (self.run_num*2<count):
+            if (self.run_num*3<count):
                 f = open(self.log_path,'a')
                 f.write("not run loop_num times\n")
                 f.close()
